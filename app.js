@@ -34,8 +34,7 @@ class ToDo {
 		this.listItemHTML(list);
 	}
 
-	setItem(item) {
-		const list = JSON.parse(localStorage.getItem("list"));
+	setItem(item, list) {
 		list.push(item);
 		localStorage.setItem("list", JSON.stringify(list));
 	}
@@ -43,20 +42,20 @@ class ToDo {
 	addItemToStorage() {
 		this.addButton.addEventListener("click", () => {
 			if (this.addInput.value.trim() !== "") {
+				const list = JSON.parse(localStorage.getItem("list"));
 				const item = {
 					id: this.uid(),
 					itemName: this.addInput.value.trim(),
 				};
 
-				this.setItem(item);
+				this.setItem(item, list);
 				this.addInput.value = "";
-				this.updateList();
+				this.updateList(list);
 			}
 		});
 	}
 
-	updateList() {
-		const list = JSON.parse(localStorage.getItem("list"));
+	updateList(list) {
 		this.list.innerHTML = "";
 		this.listItemHTML(list);
 	}
